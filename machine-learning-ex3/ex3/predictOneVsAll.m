@@ -30,11 +30,15 @@ X = [ones(m, 1) X];
 %       for each row.
 %       
 
+% whos
 
+result = sigmoid(X * all_theta');
 
+% result(1:100, :)
 
+[max_value, p] = max(result, [], 2);
 
-
+% p(1:100)
 
 % =========================================================================
 
