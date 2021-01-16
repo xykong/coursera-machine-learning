@@ -21,11 +21,16 @@ p = zeros(size(X, 1), 1);
 %       can use max(A, [], 2) to obtain the max for each row.
 %
 
+% whos
 
+% Add ones to the X data matrix
+X = [ones(m, 1) X];
 
+% whos 
 
+result = sigmoid([ones(m, 1) sigmoid(X * Theta1')] * Theta2');
 
-
+[max_value, p] = max(result, [], 2);
 
 
 
