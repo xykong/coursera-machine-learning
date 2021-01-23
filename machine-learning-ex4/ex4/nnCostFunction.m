@@ -111,6 +111,15 @@ delta2 = sigma3'*a2;
 Theta1_grad = delta1 ./ m;
 Theta2_grad = delta2 ./ m;
 
+% 2.5 Regularized Neural Networks
+Regularized1 = (lambda / m) * [zeros(size(Theta1, 1), 1) Theta1(:, 2:end)];
+Regularized2 = (lambda / m) * [zeros(size(Theta2, 1), 1) Theta2(:, 2:end)];
+
+% To account for regularization, it turns out that you can add this as an additional 
+% term after computing the gradients using backpropagation.
+Theta1_grad += Regularized1;
+Theta2_grad += Regularized2;
+
 % -------------------------------------------------------------
 
 % =========================================================================
