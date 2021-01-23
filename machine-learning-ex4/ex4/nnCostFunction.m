@@ -64,8 +64,13 @@ Theta2_grad = zeros(size(Theta2));
 
 % whos
 
-a2 = sigmoid([ones(m, 1) X] * Theta1');
-h =sigmoid([ones(m, 1) a2] * Theta2');
+% forward pass
+a1 = [ones(m, 1) X];
+z2 = a1 * Theta1';
+a2 = [ones(size(z2, 1), 1) sigmoid(z2)];
+z3 = a2 * Theta2';
+a3 = sigmoid(z3);
+h = a3;
 
 % whos
 
@@ -78,14 +83,33 @@ end
 
 % whos
 
-for k = 1:num_labels,
-    Jk(k) = (1 / m) * (-Y(:,k)' * log(h)(:,k) - (1 - Y(:,k))' * log(1 - h)(:,k));
-end
+% for k = 1:num_labels,
+%     Jk(k) = (1 / m) * (-Y(:,k)' * log(h)(:,k) - (1 - Y(:,k))' * log(1 - h)(:,k));
+% end
 
-J = sum(Jk(:));
+% J = sum(Jk(:));
+
+J = (1 / m) * sum(sum((-Y) .* log(h) - (1 - Y) .* log(1 - h), 2));
 
 J += lambda / (2 * m) * (Theta1(:,2:end)(:)' * Theta1(:,2:end)(:) + Theta2(:,2:end)(:)' * Theta2(:,2:end)(:));
 
+% backpropagation algorithm
+% 2. For each output unit k in layer 3 (the output layer), set
+sigma3 = a3 - Y;
+
+% 3. For the hidden layer l = 2, set
+sigma2 = (sigma3 * Theta2 .* sigmoidGradient([ones(size(z2, 1), 1) z2]))(:, 2:end);
+
+% 4. Accumulate the gradient from this example using the following for- mula. 
+% Note that you should skip or remove δ(2). In Octave/MATLAB,
+% removing δ(2) corresponds to delta 2 = delta 2(2:end).
+delta1 = sigma2'*a1;
+delta2 = sigma3'*a2;
+
+% 5. Obtain the (unregularized) gradient for the neural network cost function
+% by dividing the accumulated gradients by m1 :
+Theta1_grad = delta1 ./ m;
+Theta2_grad = delta2 ./ m;
 
 % -------------------------------------------------------------
 
