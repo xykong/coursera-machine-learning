@@ -24,7 +24,7 @@ theta(1) = 0;
 d = h - y;
 J = (1 / (2 * m)) * d' * d + (lambda / (2 * m)) * theta' * theta;
 
-
+grad = (1 / m) * X' * d + (lambda / m) * theta;
 
 
 
