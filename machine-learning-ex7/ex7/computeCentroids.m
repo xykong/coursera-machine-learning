@@ -27,10 +27,16 @@ centroids = zeros(K, n);
 %
 
 
+% whos
+sums = zeros(K, n);
+counts = zeros(K, 1);
 
+for i = 1 : m
+    counts(idx(i)) += 1;
+    sums(idx(i), :) += X(i, :);
+end
 
-
-
+centroids = sums ./ counts;
 
 
 % =============================================================
