@@ -22,9 +22,20 @@ idx = zeros(size(X,1), 1);
 %
 
 
+M = size(X, 1);
 
-
-
+for i = 1 : M
+    min_idx = 1;
+    min_value = inf;
+    for j = 1 : K
+        value = sum((X(i, :) - centroids(j, :)) .^ 2);
+        if min_value > value
+            min_idx = j;
+            min_value = value;
+        end
+    end
+    idx(i) = min_idx;
+end
 
 
 % =============================================================
