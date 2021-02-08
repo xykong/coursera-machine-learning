@@ -42,12 +42,12 @@ Theta_grad = zeros(size(Theta));
 
 
 % whos
-
-J = sum(sum(((X * Theta' - Y) .* R) .^ 2)) / 2;
-
-
+h = (X * Theta' - Y) .* R;
+J = sum(sum(h .^ 2)) / 2;
 
 
+X_grad = h * Theta;
+Theta_grad = h' * X;
 
 
 
