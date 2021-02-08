@@ -41,10 +41,9 @@ Theta_grad = zeros(size(Theta));
 %
 
 
+% whos
 
-
-
-
+J = sum(sum(((X * Theta' - Y) .* R) .^ 2)) / 2;
 
 
 
