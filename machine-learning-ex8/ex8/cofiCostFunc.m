@@ -51,6 +51,8 @@ Theta_grad = h' * X;
 
 J += lambda * (sum(sum(Theta .^ 2)) + sum(sum(X .^ 2))) / 2;
 
+X_grad += lambda * X;
+Theta_grad += lambda * Theta;
 
 % =============================================================
 
